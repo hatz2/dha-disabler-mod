@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include <string>
+#include <thread>
 #include "pattern_scanner.h"
 
 void disable_dha() {
@@ -24,7 +25,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
     switch (ul_reason_for_call) {
     case DLL_PROCESS_ATTACH:
         DisableThreadLibraryCalls(hModule);
-        disable_dha();
+        std::thread(disable_dha).detach();
         break;
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
